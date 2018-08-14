@@ -112,35 +112,15 @@ public class HWLevel1Lesson2 {
         System.out.println("Original:\t" + Arrays.toString(arr7_4));
         makeShiftRing(arr7_4, -5);
         System.out.println("Modified:\t" + Arrays.toString(arr7_4));
-        System.out.println();
-        
-        /*
-        * Решил сделать врорую версию сдвига кольцом сразу на N. 
-        * В первом варианте получается N сдвигов по 1 элементу.
-        * Во втором варианте получается 1 сдвиг сразу на N элементов.
-        * Первый вариант требует дополнительную переменную для хранения 
-        * одного элемента массива. Второй вариант требует промежуточный
-        * массив для хранения N элементов. Создание промежуточных массивов
-        * было запрещено заданием, однако, такая реализация, по моему
-        * мнению, ускоряет процесс сдвига.
-        */
-        
+
         System.out.println("Shift right by ring version 2");
         System.out.println("Original:\t" + Arrays.toString(arr7_5));
-        makeShiftRingN(arr7_5, 3);
+        makeShiftRingNoArray(arr7_5, 3);
         System.out.println("Modified:\t" + Arrays.toString(arr7_5));
         System.out.println("Shift left by ring version 2");
         System.out.println("Original:\t" + Arrays.toString(arr7_6));
-        makeShiftRingN(arr7_6, -5);
+        makeShiftRingNoArray(arr7_6, -5);
         System.out.println("Modified:\t" + Arrays.toString(arr7_6));
-        System.out.println();
-
-
-        int[] arr7_7 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        System.out.println("Shift right by ring version 3");
-        System.out.println("Original:\t" + Arrays.toString(arr7_7));
-        makeShiftRingNoArray(arr7_7, 3);
-        System.out.println("Modified:\t" + Arrays.toString(arr7_7));
     }
 
     static void invertData(int[] arr) {
@@ -214,87 +194,54 @@ public class HWLevel1Lesson2 {
         }
     }
 
-    static void makeShiftRingRight(int[] arr) {
-        int temp = arr[arr.length - 1];
-        makeShiftN(arr, 1);
-        arr[0] = temp;
-    }
-
-    static void makeShiftRingLeft(int[] arr) {
-        int temp = arr[0];
-        makeShiftN(arr, -1);
-        arr[arr.length - 1] = temp;
-    }
-
     static void makeShiftRing(int[] arr, int n) {
         if(n > 0) {
             for(int i = 0; i < n; i++) {
-                makeShiftRingRight(arr);
+                int temp = arr[arr.length - 1];
+                makeShiftN(arr, 1);
+                arr[0] = temp;
             }
         } else {
             for(int i = 0; i > n; i--) {
-                makeShiftRingLeft(arr);
-            }
-        }
-    }
-
-    static void makeShiftRingN(int[] arr, int n) {
-        int[] tmp = new int[Math.abs(n)];
-
-        for(int i = 0; i < Math.abs(n); i++) {
-
-        }
-
-        if(n > 0) {
-            for(int i = 0; i < n; i++) {
-                tmp[i] = arr[arr.length - n + i];
-            }
-            for(int i = arr.length - 1 - n; i >= 0; i--) {
-                arr[i+n] = arr[i];
-            }
-            for(int i = 0; i < n; i++) {
-                arr[i] = tmp[i];
-            }
-        } else {
-            for(int i = 0; i < -n; i++) {
-                tmp[i] = arr[i];
-            }
-            for(int i = 0 - n; i < arr.length; i++) {
-                arr[i+n] = arr[i];
-            }
-            for(int i = 0; i < -n; i++) {
-                arr[arr.length + n + i] = tmp[i];
+                int temp = arr[0];
+                makeShiftN(arr, -1);
+                arr[arr.length - 1] = temp;
             }
         }
     }
 
     static void makeShiftRingNoArray(int[] arr, int n) {
-        int tmp1 = 0, tmp2;
-        int cnt = 0;
-        int i = 0;
-        boolean flag1 = false;
+        if(n < 0) {
+            n = arr.length - (-n % arr.length);
+        }
 
-        if(n > arr.length) {
+        if(n >= arr.length) {
             n = n % arr.length;
         }
 
-        if(n % arr.length == 0) {
-            flag1 = true;
-        }
+        if (n == 0) return;
 
-        tmp2 = arr[0];
+        int tmp1, tmp2;
+        int cnt = 0;
+        int i = 0;
 
-        while(true) {
+        tmp2 = arr[i];
+
+        while(cnt < arr.length) {
             int k = (i + n) % arr.length;
-            tmp1 = arr[k];
+
+            if((i + n) >= arr.length && ((cnt + 1) * n) % arr.length == 0) {
+                tmp1 = arr[k + 1];
+                i = k + 1;
+            } else {
+                tmp1 = arr[k];
+                i = k;
+            }
+
             arr[k] = tmp2;
             tmp2 = tmp1;
 
-            i = k;
-
             cnt++;
-            if(cnt == arr.length) break;
         }
-
     }
 }
