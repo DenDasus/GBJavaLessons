@@ -80,14 +80,6 @@ public class HWLevel1Lesson2 {
         System.out.println();
         
         //Task 7
-        
-        /*
-        *   
-        *
-        *
-        *
-        */
-        
         System.out.println("*** Task 7 ***");
         int[] arr7_1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
         int[] arr7_2 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
