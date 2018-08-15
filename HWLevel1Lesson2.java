@@ -2,7 +2,7 @@
 *   Java Level 1. Lesson 2. Homework.
 *
 *   @author Denis Kuzovin
-*   @version Aug 13, 2018
+*   @version Aug 15, 2018
 */
 
 import java.util.Arrays;
@@ -102,7 +102,7 @@ public class HWLevel1Lesson2 {
         System.out.println("Modified:\t" + Arrays.toString(arr7_3));
         System.out.println("Shift left by ring");
         System.out.println("Original:\t" + Arrays.toString(arr7_4));
-        makeShiftRing(arr7_4, -5);
+        makeShiftRing(arr7_4, -20);
         System.out.println("Modified:\t" + Arrays.toString(arr7_4));
 
         System.out.println("Shift right by ring version 2");
@@ -111,10 +111,11 @@ public class HWLevel1Lesson2 {
         System.out.println("Modified:\t" + Arrays.toString(arr7_5));
         System.out.println("Shift left by ring version 2");
         System.out.println("Original:\t" + Arrays.toString(arr7_6));
-        makeShiftRingNoArray(arr7_6, -5);
+        makeShiftRingNoArray(arr7_6, -21);
         System.out.println("Modified:\t" + Arrays.toString(arr7_6));
     }
 
+    // Task 1
     static void invertData(int[] arr) {
         for(int i = 0; i < arr.length; i++) {
             if (arr[i] == 0)
@@ -124,12 +125,14 @@ public class HWLevel1Lesson2 {
         }
     }
 
+    //Task 2
     static void fillData(int[] arr) {
         for(int i = 0; i < arr.length; i++){
             arr[i] = i * 3;
         }
     }
 
+    //Task 3
     static void multiplySmallNumbers(int[] arr) {
         for(int i = 0; i < arr.length; i++){
             if(arr[i] < 6)
@@ -137,6 +140,7 @@ public class HWLevel1Lesson2 {
         }
     }
 
+    //Task 4
     static void fillDiagonals(int[][] arr) {
         for(int i = 0, j = 0; i < arr.length && j < arr[i].length; i++, j++) {
             arr[i][j] = 1;
@@ -144,6 +148,7 @@ public class HWLevel1Lesson2 {
         }
     }
 
+    //Task 5
     static void findMinAndMax(int[] arr, MinMax result) {
         result.min = arr[0];
         result.max = arr[0];
@@ -153,6 +158,7 @@ public class HWLevel1Lesson2 {
         }
     }
 
+    //Task 6
     static boolean checkBalance(int[] arr) {
         int sum1 = 0, sum2 = 0;
 
@@ -168,6 +174,7 @@ public class HWLevel1Lesson2 {
         return false;
     }
 
+    //Task 7 (Shift with data loss)
     static void makeShiftN(int[] arr, int n) {
         if(n > 0) {
             for(int i = arr.length - 1 - n; i >= 0; i--) {
@@ -186,7 +193,13 @@ public class HWLevel1Lesson2 {
         }
     }
 
+    //Task 7 (Ring shift the entire array N times for one element)
     static void makeShiftRing(int[] arr, int n) {
+        if(n == 0) return;
+        if(Math.abs(n) >= arr.length) {
+                n = n % arr.length;
+        }
+
         if(n > 0) {
             for(int i = 0; i < n; i++) {
                 int temp = arr[arr.length - 1];
@@ -201,36 +214,38 @@ public class HWLevel1Lesson2 {
             }
         }
     }
-
+    //Task 7 (Ring shift of the entire array 1 time by N elements)
+    //Ring shift to the left by N elements is equivalent to shifting to the right by (arr.length - N) elements.
     static void makeShiftRingNoArray(int[] arr, int n) {
-        if(n < 0) {
-            n = arr.length - (-n % arr.length);
-        }
-
-        if(n >= arr.length) {
+        if(Math.abs(n) >= arr.length) {
             n = n % arr.length;
         }
 
         if (n == 0) return;
 
+        if(n < 0) {
+            n = arr.length + n;
+        }
+
         int tmp1, tmp2;
         int cnt = 0;
-        int i = 0;
+        int currElem = 0;
 
-        tmp2 = arr[i];
+        tmp2 = arr[currElem];
 
         while(cnt < arr.length) {
-            int k = (i + n) % arr.length;
+            int nextElem = (currElem + n) % arr.length;
 
-            if((i + n) >= arr.length && ((cnt + 1) * n) % arr.length == 0) {
-                tmp1 = arr[k + 1];
-                i = k + 1;
+            // Handle the case of returning to a previously processed array element.
+            if((currElem + n) >= arr.length && ((cnt + 1) * n) % arr.length == 0) {
+                tmp1 = arr[nextElem + 1];
+                currElem = nextElem + 1;
             } else {
-                tmp1 = arr[k];
-                i = k;
+                tmp1 = arr[nextElem];
+                currElem = nextElem;
             }
 
-            arr[k] = tmp2;
+            arr[nextElem] = tmp2;
             tmp2 = tmp1;
 
             cnt++;
