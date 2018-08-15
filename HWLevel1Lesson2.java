@@ -89,20 +89,20 @@ public class HWLevel1Lesson2 {
         int[] arr7_6 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
         System.out.println("Shift right with loss");
         System.out.println("Original:\t" + Arrays.toString(arr7_1));
-        makeShiftN(arr7_1, 5);
+        makeShiftN(arr7_1, 3);
         System.out.println("Modified:\t" + Arrays.toString(arr7_1));
         System.out.println("Shift left with loss");
         System.out.println("Original:\t" + Arrays.toString(arr7_2));
-        makeShiftN(arr7_2, -5);
+        makeShiftN(arr7_2, -3);
         System.out.println("Modified:\t" + Arrays.toString(arr7_2));
         
         System.out.println("Shift right by ring");
         System.out.println("Original:\t" + Arrays.toString(arr7_3));
-        makeShiftRing(arr7_3, 5);
+        makeShiftRing(arr7_3, 3);
         System.out.println("Modified:\t" + Arrays.toString(arr7_3));
         System.out.println("Shift left by ring");
         System.out.println("Original:\t" + Arrays.toString(arr7_4));
-        makeShiftRing(arr7_4, -20);
+        makeShiftRing(arr7_4, -21);
         System.out.println("Modified:\t" + Arrays.toString(arr7_4));
         
         System.out.println("Shift right by ring version 2");
@@ -176,6 +176,12 @@ public class HWLevel1Lesson2 {
     
     //Task 7 (Shift with data loss)
     static void makeShiftN(int[] arr, int n) {
+        if (Math.abs(n) >= arr.length) {
+            for (int i = 0; i < arr.length; i++) {
+                arr[i] = 0;
+            }
+            return;
+        }
         if (n > 0) {
             for (int i = arr.length - 1 - n; i >= 0; i--) {
                 arr[i + n] = arr[i];
