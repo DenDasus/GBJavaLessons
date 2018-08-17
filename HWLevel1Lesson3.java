@@ -1,97 +1,119 @@
-import java.util.Arrays;
-
 import java.util.Scanner;
 import java.util.Random;
+import java.util.Arrays;
 
 public class HWLevel1Lesson3 {
     public static Random rand = new Random();
     public static Scanner sc = new Scanner(System.in);
-    
+
     public static void main(String[] args) {
-        System.out.println("В какую игру вы хотите сыграть?");
-        System.out.println("1 - Угадай число");
-        System.out.println("2 - Угадай слово");
-        int choice = 0;
-        do {
-            choice = sc.nextInt();
-        } while (!(choice == 1 || choice == 2));
-        System.out.println("Играем в " + (choice == 1 ? "\"Угадай число\"" : "\"Угадай слово\""));
-        switch (choice) {
-            case 1:
-                gameGuessNumber();
-                break;
-            case 2:
-                gameGuessWord();
-                break;
+        boolean exitProgram = false;
+        while (!exitProgram) {
+            System.out.println("Р’ РєР°РєСѓСЋ РёРіСЂСѓ РІС‹ С…РѕС‚РёС‚Рµ СЃС‹РіСЂР°С‚СЊ?");
+            System.out.println("1 - РЈРіР°РґР°Р№ С‡РёСЃР»Рѕ");
+            System.out.println("2 - РЈРіР°РґР°Р№ СЃР»РѕРІРѕ");
+            System.out.println("0 - Р’С‹С…РѕРґ");
+
+            int choice = 0;
+            do {
+                choice = sc.nextInt();
+            } while (!(choice == 1 || choice == 2 || choice == 0));
+
+            switch (choice) {
+                case 0:
+                    exitProgram = true;
+                    break;
+                case 1:
+                    System.out.println("РРіСЂР°РµРј РІ \"РЈРіР°РґР°Р№ С‡РёСЃР»Рѕ\"");
+                    gameGuessNumber();
+                    break;
+                case 2:
+                    System.out.println("РРіСЂР°РµРј РІ \"РЈРіР°РґР°Р№ СЃР»РѕРІРѕ\"");
+                    gameGuessWord();
+                    break;
+                default:
+                    break;
+            }
         }
     }
-    
+
     public static void gameGuessNumber() {
-        boolean isExit = false;
-        while (!isExit) {
+        boolean exitGame = false;
+        while (!exitGame) {
             int range = 9;
             int attempts = 3;
             int number = rand.nextInt(range + 1);
-            System.out.println("Угадайте число от 0 до " + range + " включительно");
-            System.out.println("У Вас есть " + attempts + " попытки.");
-            
+            System.out.println("РЈРіР°РґР°Р№С‚Рµ С‡РёСЃР»Рѕ РѕС‚ 0 РґРѕ " + range + " РІРєР»СЋС‡РёС‚РµР»СЊРЅРѕ");
+            System.out.println("РџРѕРїС‹С‚РѕРє: " + attempts);
+
             while (attempts > 0) {
                 int userNumber = sc.nextInt();
                 sc.nextLine();
-                
+
                 if (userNumber < 0 || userNumber > range) {
-                    System.out.println("Веденное число не удовлетворяет условию.");
+                    System.out.println("Р’РµРґРµРЅРЅРѕРµ С‡РёСЃР»Рѕ РЅРµ СѓРґРѕРІР»РµС‚РІРѕСЂСЏРµС‚ СѓСЃР»РѕРІРёСЋ.");
+                    continue;
                 }
                 if (userNumber == number) {
-                    System.out.println("Вы угадали!");
+                    System.out.println("Р’С‹ СѓРіР°РґР°Р»Рё!");
                     break;
                 } else if (userNumber > number) {
-                    System.out.println("Загаданное число меньше введенного");
+                    System.out.println("Р—Р°РіР°РґР°РЅРЅРѕРµ С‡РёСЃР»Рѕ РјРµРЅСЊС€Рµ РІРІРµРґРµРЅРЅРѕРіРѕ");
                 } else {
-                    System.out.println("Загаданное число больше введенного");
+                    System.out.println("Р—Р°РіР°РґР°РЅРЅРѕРµ С‡РёСЃР»Рѕ Р±РѕР»СЊС€Рµ РІРІРµРґРµРЅРЅРѕРіРѕ");
                 }
                 attempts--;
-                System.out.println("У Вас осталось " + attempts + " попыток.");
+                System.out.println("РћСЃС‚Р°Р»РѕСЃСЊ РїРѕРїС‹С‚РѕРє: " + attempts);
             }
-            
+
             int choice = 0;
             do {
-                System.out.println("Повторить игру еще раз? 1 - да / 0 - нет");
+                System.out.println("РџРѕРІС‚РѕСЂРёС‚СЊ РёРіСЂСѓ РµС‰Рµ СЂР°Р·? 1 - РґР° / 0 - РЅРµС‚");
                 choice = sc.nextInt();
                 sc.nextLine();
             } while (!(choice == 0 || choice == 1));
-            isExit = choice == 0 ? true : false;
-            
+            exitGame = choice == 0;
         }
-        
     }
-    
+
     public static void gameGuessWord() {
         String[] words = {"apple", "orange", "lemon", "banana", "apricot", "avocado", "broccoli", "carrot",
                 "cherry", "garlic", "grape", "melon", "leak", "kiwi", "mango", "mushroom", "nut", "olive", "pea",
                 "peanut", "pear", "pepper", "pineapple", "pumpkin", "potato"};
-        
+
         int guessedWordIndex = rand.nextInt(words.length);
-        Scanner sc = new Scanner(System.in);
-        System.out.println(Arrays.toString(words));
-        System.out.println("Введите слово");
-        boolean isExit = false;
-        while (!isExit) {
-            String userWord = sc.nextLine();
-            if (userWord.equals(words[guessedWordIndex])) {
-                System.out.println("Вы угадали!");
-                isExit = true;
-            } else {
-                for (int i = 0; i < 15; i++) {
-                    if (words[guessedWordIndex].length() > i && userWord.length() > i)
-                        System.out.print(words[guessedWordIndex].charAt(i) == userWord.charAt(i) ? userWord.charAt(i) : "#");
-                    else
-                        System.out.print("#");
+
+        boolean exitGame = false;
+        while (!exitGame) {
+            System.out.println("Р’РѕР·РјРѕР¶РЅС‹Рµ СЃР»РѕРІР°: " + Arrays.toString(words));
+            System.out.println("Р’РІРµРґРёС‚Рµ СЃР»РѕРІРѕ");
+            System.out.println("Р’РІРµРґРёС‚Рµ \"exit\" РґР»СЏ РІС‹С…РѕРґР° РёР· РёРіСЂС‹");
+            boolean gameWin = false;
+            while (!gameWin) {
+                String userWord = sc.nextLine();
+                if (userWord.equals("exit")) break;
+                if (userWord.equals(words[guessedWordIndex])) {
+                    System.out.println("Р’С‹ СѓРіР°РґР°Р»Рё!");
+                    gameWin = true;
+                } else {
+                    for (int i = 0; i < 15; i++) {
+                        if (words[guessedWordIndex].length() > i && userWord.length() > i)
+                            System.out.print(words[guessedWordIndex].charAt(i) == userWord.charAt(i) ? userWord.charAt(i) : "#");
+                        else
+                            System.out.print("#");
+                    }
+                    System.out.println();
+                    System.out.println("РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·");
                 }
-                System.out.println();
-                System.out.println("Попробуйте еще раз");
             }
+
+            int choice = 0;
+            do {
+                System.out.println("РџРѕРІС‚РѕСЂРёС‚СЊ РёРіСЂСѓ РµС‰Рµ СЂР°Р·? 1 - РґР° / 0 - РЅРµС‚");
+                choice = sc.nextInt();
+                sc.nextLine();
+            } while (!(choice == 0 || choice == 1));
+            exitGame = choice == 0;
         }
-        
     }
 }
