@@ -1,3 +1,10 @@
+/**
+ * Java Level 1. Lesson 3. Homework.
+ *
+ * @author Denis Kuzovin
+ * @version Aug 17, 2018
+ */
+
 import java.util.Scanner;
 import java.util.Random;
 import java.util.Arrays;
