@@ -1,15 +1,16 @@
 /**
  * Java 1. Lesson 4. Tic-tac-toe in console
  *
- * @author Sergey Iryupin
- * @version dated Feb 02, 2017
+ * @author Sergey Iryupin, Denis Kuzovin
+ * @version Aug 24, 2018
  */
 import java.util.Random;
 import java.util.Scanner;
 
 class TicTacToe {
 
-    final int SIZE = 3;
+    final int SIZE = 6;
+    final int SIZE_WIN = 4;
     final char DOT_X = 'x';
     final char DOT_O = 'o';
     final char DOT_EMPTY = '.';
@@ -22,6 +23,7 @@ class TicTacToe {
     }
 
     TicTacToe() {
+        System.out.println("Game field: " + SIZE + "x" + SIZE + ", dots in line to win: " + SIZE_WIN + ".");
         initMap();
         while (true) {
             humanTurn();
@@ -33,7 +35,7 @@ class TicTacToe {
                 System.out.println("Sorry, DRAW!");
                 break;
             }
-//            aiTurn();
+            aiTurn();
             printMap();
             if (checkWin(DOT_O)) {
                 System.out.println("AI WON!");
@@ -66,7 +68,7 @@ class TicTacToe {
     void humanTurn() {
         int x, y;
         do {
-            System.out.println("Enter X and Y (1..3):");
+            System.out.println("Enter X and Y (1.." + SIZE + "):");
             x = sc.nextInt() - 1;
             y = sc.nextInt() - 1;
         } while (!isCellValid(x, y));
@@ -112,21 +114,26 @@ class TicTacToe {
     }
 
     boolean checkWin(char dot) {
-        boolean firstDiag = true;
-        boolean secondDiag = true;
-        for(int i = 0; i < SIZE; i++) {
-            firstDiag &= map[i][i] == dot;
-            secondDiag &= map[SIZE - 1 - i][i] == dot;
-            
-            boolean col = true;
-            boolean row = true;
-            for(int j = 0; j < SIZE; j++) {
-                col &= map[i][j] == dot;
-                row &= map[j][i] == dot;
+        for(int offsetX = 0; offsetX <= SIZE - SIZE_WIN; offsetX++) {
+            for(int offsetY = 0; offsetY <= SIZE - SIZE_WIN; offsetY++) {
+                boolean firstDiag = true;
+                boolean secondDiag = true;
+                for(int i = 0; i < SIZE_WIN; i++) {
+                    firstDiag &= map[i + offsetX][i + offsetY] == dot;
+                    secondDiag &= map[SIZE_WIN - 1 - i + offsetX][i + offsetY] == dot;
+        
+                    boolean col = true;
+                    boolean row = true;
+                    for(int j = 0; j < SIZE_WIN; j++) {
+                        col &= map[i + offsetX][j + offsetY] == dot;
+                        row &= map[j + offsetY][i + offsetX] == dot;
+                    }
+                    if (col || row) return true;
+                }
+                if (firstDiag || secondDiag) return true;
             }
-            if (col || row) return true;
         }
-        return (firstDiag || secondDiag);
+        return false;
     }
 
     boolean isMapFull() {
