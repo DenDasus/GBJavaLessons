@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 class TicTacToe {
 
-    final int SIZE = 6;
+    final int SIZE = 5;
     final int SIZE_WIN = 4;
     final char DOT_X = 'x';
     final char DOT_O = 'o';
