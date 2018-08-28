@@ -40,6 +40,7 @@ class Person {
         setAge(age);
     }
 
+    @Override
     public String toString() {
         return "Name: " + name + ", Position: " + position + ", Mail: " + mail + ", Phone: "
                 + phone + ", Money: " + money + ", Age: " + age;
