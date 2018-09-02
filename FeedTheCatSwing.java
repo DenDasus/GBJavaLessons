@@ -1,3 +1,10 @@
+/**
+ * Java Level 1. Lesson 7. Homework. GUI
+ *
+ * @author Denis Kuzovin
+ * @version Sep 2, 2018
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -56,7 +63,7 @@ public class FeedTheCatSwing extends JFrame {
         plateButton.setBorderPainted(false);
 
         JLabel txtLabel = new JLabel();
-        txtLabel.setText("Нажмине на кота чтобы покормить его. Нажмите на тарелку чтобы добавить еды.");
+        txtLabel.setText("Click on the cat to feed him. Click on the plate to add the meal.");
         txtLabel.setBounds(5, WINDOW_HEIGHT - 70, WINDOW_WIDTH, 50);
 
         panelButtons.setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT - 250);

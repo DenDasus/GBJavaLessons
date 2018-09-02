@@ -1,3 +1,10 @@
+/**
+ * Java Level 1. Lesson 7. Homework.
+ *
+ * @author Denis Kuzovin
+ * @version Sep 2, 2018
+ */
+
 public class HWLevel1Lesson7 {
     public static void main(String[] args) {
         FeedTheCat feedTheCat = new FeedTheCat();
@@ -9,11 +16,19 @@ public class HWLevel1Lesson7 {
         feedTheCat.feedCats(cats, plate);
         System.out.println(plate);
 
+        for(int i = 0; i < cats.length; i++) {
+            System.out.println("Cat " + i + " is hungry? " + cats[i].isHungry());
+        }
+
+        System.out.println("Add some food");
         plate.addFood(15);
         System.out.println(plate);
         feedTheCat.feedCats(cats, plate);
         System.out.println(plate);
 
+        for(int i = 0; i < cats.length; i++) {
+            System.out.println("Cat " + i + " is hungry? " + cats[i].isHungry());
+        }
     }
 }
 
